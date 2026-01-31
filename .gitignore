@@ -1,0 +1,67 @@
+# Build generated
+build/
+DerivedData/
+
+# Xcode
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata/
+*.xccheckout
+*.moved-aside
+*.xcuserstate
+*.xcscmblueprint
+*.xcworkspace
+!default.xcworkspace
+
+# SPM
+.swiftpm/
+.build/
+Package.resolved
+
+# CocoaPods
+Pods/
+Podfile.lock
+
+# Carthage
+Carthage/Build/
+Carthage/Checkouts
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output
+
+# Code coverage
+*.xcresult
+
+# macOS
+.DS_Store
+*.swp
+*~.nib
+
+# Xcode Playground
+timeline.xctimeline
+playground.xcworkspace
+
+# App packaging
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# Secrets
+*.pem
+*.p12
+*.mobileprovision
+Secrets/
