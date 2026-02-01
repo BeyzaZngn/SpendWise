@@ -21,14 +21,11 @@ jobs:
     - name: Show Xcode version
       run: xcodebuild -version
 
-    - name: List Available Simulators
-      run: xcrun simctl list devices available
-
     - name: Build
       run: |
         xcodebuild build \
           -scheme SpendWise \
-          -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.1' \
+          -destination 'generic/platform=iOS Simulator' \
           -configuration Debug \
           CODE_SIGN_IDENTITY="" \
           CODE_SIGNING_REQUIRED=NO
@@ -37,7 +34,7 @@ jobs:
       run: |
         xcodebuild test \
           -scheme SpendWise \
-          -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.1' \
+          -destination 'generic/platform=iOS Simulator' \
           -only-testing:SpendWiseTests \
           -resultBundlePath TestResults.xcresult \
           CODE_SIGN_IDENTITY="" \
@@ -48,7 +45,7 @@ jobs:
       run: |
         xcodebuild test \
           -scheme SpendWise \
-          -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.1' \
+          -destination 'generic/platform=iOS Simulator' \
           -only-testing:SpendWiseUITests \
           CODE_SIGN_IDENTITY="" \
           CODE_SIGNING_REQUIRED=NO
@@ -77,7 +74,7 @@ jobs:
       run: |
         xcodebuild test \
           -scheme SpendWise \
-          -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.1' \
+          -destination 'generic/platform=iOS Simulator' \
           -enableCodeCoverage YES \
           -resultBundlePath CoverageResults.xcresult \
           CODE_SIGN_IDENTITY="" \
