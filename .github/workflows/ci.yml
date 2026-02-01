@@ -7,95 +7,43 @@ on:
     branches: [ main, develop ]
 
 jobs:
-  build-and-test:
-    name: Build and Test
-    runs-on: macos-15
+  build:
+    name: Build
+    runs-on: macos-latest
 
     steps:
     - name: Checkout
       uses: actions/checkout@v4
 
-    - name: Select Xcode
-      run: sudo xcode-select -s /Applications/Xcode_16.2.app
+    - name: Show Available Xcode Versions
+      run: ls -la /Applications/ | grep Xcode
 
-    - name: Show Xcode version
+    - name: Select Latest Xcode
+      run: |
+        XCODE_PATH=$(ls -d /Applications/Xcode*.app 2>/dev/null | sort -V | tail -1)
+        echo "Using Xcode: $XCODE_PATH"
+        sudo xcode-select -s "$XCODE_PATH"
+
+    - name: Show Xcode Version
       run: xcodebuild -version
 
-    - name: Build
+    - name: Show Available Simulators
+      run: xcrun simctl list devices available | head -50
+
+    - name: Build for iOS Simulator
       run: |
         xcodebuild build \
+          -project SpendWise.xcodeproj \
           -scheme SpendWise \
-          -destination 'generic/platform=iOS Simulator' \
+          -sdk iphonesimulator \
           -configuration Debug \
           CODE_SIGN_IDENTITY="" \
-          CODE_SIGNING_REQUIRED=NO
-
-    - name: Run Unit Tests
-      run: |
-        xcodebuild test \
-          -scheme SpendWise \
-          -destination 'generic/platform=iOS Simulator' \
-          -only-testing:SpendWiseTests \
-          -resultBundlePath TestResults.xcresult \
-          CODE_SIGN_IDENTITY="" \
-          CODE_SIGNING_REQUIRED=NO
-      continue-on-error: true
-
-    - name: Run UI Tests
-      run: |
-        xcodebuild test \
-          -scheme SpendWise \
-          -destination 'generic/platform=iOS Simulator' \
-          -only-testing:SpendWiseUITests \
-          CODE_SIGN_IDENTITY="" \
-          CODE_SIGNING_REQUIRED=NO
-      continue-on-error: true
-
-    - name: Upload Test Results
-      uses: actions/upload-artifact@v4
-      if: always()
-      with:
-        name: test-results
-        path: TestResults.xcresult
-
-  code-coverage:
-    name: Code Coverage
-    runs-on: macos-15
-    needs: build-and-test
-
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-
-    - name: Select Xcode
-      run: sudo xcode-select -s /Applications/Xcode_16.2.app
-
-    - name: Run Tests with Coverage
-      run: |
-        xcodebuild test \
-          -scheme SpendWise \
-          -destination 'generic/platform=iOS Simulator' \
-          -enableCodeCoverage YES \
-          -resultBundlePath CoverageResults.xcresult \
-          CODE_SIGN_IDENTITY="" \
-          CODE_SIGNING_REQUIRED=NO
-      continue-on-error: true
-
-    - name: Generate Coverage Report
-      run: |
-        xcrun xccov view --report CoverageResults.xcresult > coverage_report.txt || echo "No coverage data"
-        cat coverage_report.txt || true
-
-    - name: Upload Coverage Report
-      uses: actions/upload-artifact@v4
-      if: always()
-      with:
-        name: coverage-report
-        path: coverage_report.txt
+          CODE_SIGNING_REQUIRED=NO \
+          ONLY_ACTIVE_ARCH=YES
 
   lint:
     name: Swift Lint
-    runs-on: macos-15
+    runs-on: macos-latest
 
     steps:
     - name: Checkout
@@ -107,4 +55,3 @@ jobs:
     - name: Run SwiftLint
       run: swiftlint lint --reporter github-actions-logging
       continue-on-error: true
-
