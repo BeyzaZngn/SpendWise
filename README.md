@@ -1,4 +1,4 @@
-# SpendWise 💰
+# SpendWise
 
 A personal finance tracking app built with modern iOS development practices.
 
