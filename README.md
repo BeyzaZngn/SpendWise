@@ -7,11 +7,11 @@ A personal finance tracking app built with modern iOS development practices.
 ![Architecture](https://img.shields.io/badge/Architecture-MVVM-green.svg)
 ## Features
 
-- 📊 **Real-time expense tracking** - Monitor your spending as it happens
-- 📈 **Interactive spending analytics** - Visualize trends with Swift Charts
-- 🎯 **Budget goals and notifications** - Set limits and get alerts when approaching them
-- 💾 **Offline-first** - All data stored locally with Core Data
-- 🔄 **Recurring transactions** - Support for daily, weekly, monthly, and yearly recurring items
+- **Real-time expense tracking** - Monitor your spending as it happens
+- **Interactive spending analytics** - Visualize trends with Swift Charts
+- **Budget goals and notifications** - Set limits and get alerts when approaching them
+- **Offline-first** - All data stored locally with Core Data
+- **Recurring transactions** - Support for daily, weekly, monthly, and yearly recurring items
 
 ## Screenshots
 
